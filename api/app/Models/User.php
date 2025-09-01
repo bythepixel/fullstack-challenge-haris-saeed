@@ -19,6 +19,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'latitude',
+        'longitude',
     ];
 
     /**
@@ -38,5 +40,23 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'latitude' => 'float',
+        'longitude' => 'float',
     ];
+
+    /**
+     * Get the weather records for the user.
+     */
+    public function weather()
+    {
+        return $this->hasMany(Weather::class);
+    }
+
+    /**
+     * Get the latest weather record for the user.
+     */
+    public function latestWeather()
+    {
+        return $this->hasOne(Weather::class)->latestOfMany('fetched_at');
+    }
 }
