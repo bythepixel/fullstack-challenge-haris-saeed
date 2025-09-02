@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,7 +17,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return response()->json([
-        'message' => 'all systems are a go',
-        'users' => \App\Models\User::all(),
+        'message' => 'Weather API - All systems are a go',
+        'version' => '1.0.0',
     ]);
 });
+
+// User and weather routes
+Route::get('/users', [UserController::class, 'index']);
+Route::get('/users/{user}', [UserController::class, 'show']);
